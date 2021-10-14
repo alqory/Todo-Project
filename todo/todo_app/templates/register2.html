@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Register
+{% endblock title %}
+
+{% block content %}
+<h1>Register</h1>
+<form class="login" method="POST">
+    {% csrf_token %}
+    {{form.kegiatan.label}}
+    {{form.kegiatan}}
+
+    {{form.is_done.label}}
+    {{form.is_done}}
+    <!-- <div class="username">
+        {{form.username.label}}
+        {{form.username}}
+    </div>
+
+    <div class="password1">
+        {{form.password.label}}
+        {{form.password}}
+    </div>
+
+    <div class="password2">
+        {{form.password_confirm.label}}
+        {{form.password_confirm}}
+    </div> -->
+    <button type="submit">Sign In</button>
+    
+   
+    
+</form>
+
+{% endblock content %}

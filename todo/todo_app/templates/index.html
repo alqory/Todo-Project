@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Todo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: sans-serif;
+            box-sizing: border-box;
+        }
+        body {
+            background: linear-gradient(0.25turn,rgb(165, 165, 235),rgb(73, 179, 228),rgb(51, 97, 99));
+        }
+        .container {
+            /* border: 1px solid; */
+            border-radius: 10px;
+            max-width: 400px;
+            margin: 20px auto; 
+            position: relative;
+            background-color: white;
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+        }
+        .header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        .form {
+            padding: 15px;
+            display: flex;
+            justify-content: space-around;
+        }
+        .form form input:hover {
+            color:white;
+            background: linear-gradient(0.25turn,rgb(165, 165, 235),rgb(73, 179, 228),rgb(51, 97, 99));
+            }
+
+        .form form input {
+            background-color: rgb(212, 208, 208);
+            cursor: pointer;
+            border-style: none;
+            min-height: 35px;
+            width: 20em;
+            border-radius: 5px;
+            text-align: center;
+            color: white;
+        }
+        
+        button[type="submit"] {
+            background: linear-gradient(0.25turn,rgb(165, 165, 235),rgb(73, 179, 228),rgb(51, 97, 99));
+                color: white;
+                border: none;
+                }
+        .form form button {
+            min-height: 35px;
+            width: 5em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 5s;
+        }
+        .display {
+            padding: 30px;
+            height:250px ;
+            overflow-y: auto;
+            position: relative;
+        }
+        .display li {
+            padding-left: 15px;
+            font-size: 16px;
+            list-style-type: none;
+            height: 40px;
+            border-bottom: 1px solid grey;
+            line-height: 40px;
+            margin-bottom: 10px;
+            background-color: rgb(205, 241, 241);
+        }
+        .display li span:hover {
+            right: 35px;
+        }
+        .display li span {
+            position: absolute;
+            right: 30px;
+            background-color: white;
+        }
+        .display h3 {
+            text-align: center;
+            text-decoration: underline;
+            font-family: monospace;
+        }
+        span a {
+            text-decoration: none;
+            font-size: 0.8cm;
+            font-weight: bold;
+            color: black;
+            border-radius: 4px;
+            border: 1px solid grey;
+        }
+        .container .pesan {
+            text-align: center;
+            padding: 10px;
+            color: rgb(4, 138, 4);
+            font-size: 0.5cm;
+        }
+        .footer {
+            padding: 20px;
+        }
+
+
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="pesan">
+        {% for pesan in messages %}
+            <p>{{pesan}}</p>
+        {% endfor %}
+        </div>
+        <div class="header">
+            <h1>Hello {{request.user}}</h1>
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'todo_app:logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'todo_app:login' %}">Login</a>
+            {% endif %}
+        </div>
+
+        <div class="form">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input id="form" type="text" name="kegiatan" placeholder="create your task here">
+                <button type="submit">Create</button>
+                <!-- <a href="{% url 'todo_app:daftar' %}">buat</a> -->
+            </form>
+        </div>
+        <div class="display">
+            <ul>
+                {% for todo in mytodo %}
+                <li>{{forloop.counter}}. {{todo.kegiatan}}<span><a href="{% url 'todo_app:hapus' todo.id%}">&#215;</a></span></li>
+
+                {% empty %}
+                <h3>No item in list</h3>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="footer"></div>
+    </div>
+
+
+</body>
+</html>                                                                                                          
